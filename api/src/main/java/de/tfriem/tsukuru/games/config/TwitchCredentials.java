@@ -1,4 +1,4 @@
-package de.tfriem.tsukuru.games;
+package de.tfriem.tsukuru.games.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
