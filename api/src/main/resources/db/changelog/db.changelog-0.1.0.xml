@@ -8,6 +8,7 @@
     <sql dbms="postgresql" endDelimiter=";">
         CREATE SCHEMA ${games.schema}
     </sql>
+
     <createTable tableName="game" schemaName="${games.schema}">
       <column name="id" type="bigint">
         <constraints primaryKey="true" primaryKeyName="game_id_pk"></constraints>
@@ -39,6 +40,7 @@
       <column name="hltb_complete_rushed" type="int"></column>
       <column name="hltb_complete_leisure" type="int"></column>
     </createTable>
+
     <createTable tableName="genre" schemaName="${games.schema}">
       <column name="id" type="bigint">
         <constraints primaryKey="true" primaryKeyName="genre_id_pk"></constraints>
@@ -58,6 +60,18 @@
         <constraints nullable="false" unique="true"></constraints>
       </column>
     </createTable>
+    <createTable tableName="release" schemaName="${games.schema}">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" primaryKeyName="release_id_pk"></constraints>
+      </column>
+      <column name="date" type="datetime"></column>
+      <column name="platform_id" type="bigint"></column>
+      <column name="game_id" type="bigint"></column>
+      <column name="region" type="clob"></column>
+    </createTable>
+
+    <!-- Junction tables -->
+
     <createTable tableName="game_genre" schemaName="${games.schema}">
       <column name="game_id" type="bigint">
         <constraints nullable="false"></constraints>
@@ -74,12 +88,19 @@
         <constraints nullable="false"></constraints>
       </column>
     </createTable>
+
     <addAutoIncrement tableName="game" schemaName="${games.schema}" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"></addAutoIncrement>
     <addAutoIncrement tableName="genre" schemaName="${games.schema}" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"></addAutoIncrement>
     <addAutoIncrement tableName="platform" schemaName="${games.schema}" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"></addAutoIncrement>
+    <addAutoIncrement tableName="release" schemaName="${games.schema}" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1"></addAutoIncrement>
+
     <addForeignKeyConstraint baseTableName="game_genre" baseTableSchemaName="${games.schema}" baseColumnNames="game_id" constraintName="game_genre_game_id_fk" referencedTableName="game" referencedTableSchemaName="${games.schema}" referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"></addForeignKeyConstraint>
     <addForeignKeyConstraint baseTableName="game_genre" baseTableSchemaName="${games.schema}" baseColumnNames="genre_id" constraintName="game_genre_genre_id_fk" referencedTableName="genre" referencedTableSchemaName="${games.schema}" referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"></addForeignKeyConstraint>
+
     <addForeignKeyConstraint baseTableName="game_platform" baseTableSchemaName="${games.schema}" baseColumnNames="game_id" constraintName="game_platform_game_id_fk" referencedTableName="game" referencedTableSchemaName="${games.schema}" referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"></addForeignKeyConstraint>
     <addForeignKeyConstraint baseTableName="game_platform" baseTableSchemaName="${games.schema}" baseColumnNames="platform_id" constraintName="game_platform_platform_id_fk" referencedTableName="platform" referencedTableSchemaName="${games.schema}" referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"></addForeignKeyConstraint>
+
+    <addForeignKeyConstraint baseTableName="release" baseTableSchemaName="${games.schema}" baseColumnNames="platform_id" constraintName="release_platform_id_fk" referencedTableName="platform" referencedTableSchemaName="${games.schema}" referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"></addForeignKeyConstraint>
+    <addForeignKeyConstraint baseTableName="release" baseTableSchemaName="${games.schema}" baseColumnNames="game_id" constraintName="release_game_id_fk" referencedTableName="game" referencedTableSchemaName="${games.schema}" referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"></addForeignKeyConstraint>
   </changeSet>
 </databaseChangeLog>

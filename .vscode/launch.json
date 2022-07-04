@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-TsukuruApplication<tsukuru>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "de.tfriem.tsukuru.TsukuruApplication",
+      "projectName": "tsukuru",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ package de.tfriem.tsukuru.games.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -20,7 +21,9 @@ import de.tfriem.tsukuru.Postgres;
 import de.tfriem.tsukuru.games.GameRepository;
 import de.tfriem.tsukuru.games.GenreRepository;
 import de.tfriem.tsukuru.games.PlatformRepository;
+import de.tfriem.tsukuru.games.ReleaseRepository;
 import de.tfriem.tsukuru.games.dao.HltbPlaytime.Category;
+import de.tfriem.tsukuru.games.dao.Release.Region;
 
 @SpringBootTest
 @Testcontainers
@@ -33,6 +36,9 @@ public class GamesDaosTest {
 
   @Autowired
   private PlatformRepository platformRepository;
+
+  @Autowired
+  private ReleaseRepository releaseRepository;
 
   @Container
   private static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(
@@ -70,7 +76,7 @@ public class GamesDaosTest {
 
   @Test
   @Transactional
-  void Write_game_with_genres_and_platforms_to_database() {
+  void Write_game_with_genres_platforms_and_releases_to_database() {
     // Setup
     assertTrue(postgreSQLContainer.isRunning());
 
@@ -97,6 +103,10 @@ public class GamesDaosTest {
     final Category complete = new Category(9, 10, 11, 12);
     final HltbPlaytime playtime = new HltbPlaytime(main, extra, complete);
 
+    final Release release1 = new Release(LocalDateTime.now(), platform1, Region.EUROPE);
+    final Release release2 = new Release(LocalDateTime.now(), platform2, Region.NORTH_AMERICA);
+    final Set<Release> releases = Set.of(release1, release2);
+
     // Execute
     final Game newGame = new Game();
     newGame.setName(name);
@@ -111,9 +121,11 @@ public class GamesDaosTest {
     newGame.setGenres(genres);
     newGame.setPlatforms(platforms);
     newGame.setHltbPlaytime(playtime);
+    newGame.setReleases(releases);
 
     genreRepository.saveAll(genres);
     platformRepository.saveAll(platforms);
+    releaseRepository.saveAll(releases);
     gameRepository.save(newGame);
 
     // Verify
@@ -150,5 +162,7 @@ public class GamesDaosTest {
     assertEquals(10, dbGame.getHltbPlaytime().getComplete().getMedian());
     assertEquals(11, dbGame.getHltbPlaytime().getComplete().getRushed());
     assertEquals(12, dbGame.getHltbPlaytime().getComplete().getLeisure());
+
+    assertEquals(releases, dbGame.getReleases());
   }
 }

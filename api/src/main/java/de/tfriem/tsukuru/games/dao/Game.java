@@ -2,6 +2,7 @@ package de.tfriem.tsukuru.games.dao;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,10 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -25,7 +26,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Game {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_generator")
@@ -73,4 +73,9 @@ public class Game {
   @ManyToMany
   @JoinTable(name = "game_platform", schema = "games", joinColumns = @JoinColumn(name = "GAME_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "PLATFORM_ID", referencedColumnName = "id"))
   private Set<Platform> platforms;
+
+  @NonNull
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "game_id")
+  private Set<Release> releases;
 }
