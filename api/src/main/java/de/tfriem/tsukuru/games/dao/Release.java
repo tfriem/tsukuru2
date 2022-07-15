@@ -1,6 +1,6 @@
 package de.tfriem.tsukuru.games.dao;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,12 +17,14 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "release", schema = "games")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Release {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "release_generator")
@@ -31,22 +33,25 @@ public class Release {
   private Long id;
 
   @Column(name = "date")
-  private LocalDateTime date;
+  private Instant date;
 
   @OneToOne
   @JoinColumn(name = "platform_id", referencedColumnName = "id")
   private Platform platform;
 
+  @Column(name = "igdb_id")
+  private long igdbId;
+
   @Enumerated(EnumType.STRING)
   private Region region;
 
-  public Release(LocalDateTime date, Platform platform, Region region) {
+  public Release(Instant date, Platform platform, Region region) {
     this.date = date;
     this.platform = platform;
     this.region = region;
   }
 
   public enum Region {
-    EUROPE, NORTH_AMERICA, AUSTRALIA, NEW_ZEALAND, JAPAN, CHINA, ASIA, WORLDWIDE, KOREA, BRAZIL;
+    NONE, EUROPE, NORTH_AMERICA, AUSTRALIA, NEW_ZEALAND, JAPAN, CHINA, ASIA, WORLDWIDE, KOREA, BRAZIL;
   }
 }

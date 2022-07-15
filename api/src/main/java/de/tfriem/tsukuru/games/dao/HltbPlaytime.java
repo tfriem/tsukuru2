@@ -11,12 +11,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Embeddable
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class HltbPlaytime {
   public static final HltbPlaytime ZERO = new HltbPlaytime(Category.ZERO, Category.ZERO, Category.ZERO);
 

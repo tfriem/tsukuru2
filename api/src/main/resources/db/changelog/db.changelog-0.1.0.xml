@@ -17,7 +17,7 @@
         <constraints nullable="false"></constraints>
       </column>
       <column name="summary" type="clob"></column>
-      <column name="steam_id" type="bigint"></column>
+      <column name="steam_id" type="clob"></column>
       <column name="steam_url" type="clob"></column>
       <column name="igdb_id" type="bigint"></column>
       <column name="igdb_url" type="clob"></column>
@@ -67,6 +67,7 @@
       <column name="date" type="datetime"></column>
       <column name="platform_id" type="bigint"></column>
       <column name="game_id" type="bigint"></column>
+      <column name="igdb_id" type="bigint"></column>
       <column name="region" type="clob"></column>
     </createTable>
 

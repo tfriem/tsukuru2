@@ -3,7 +3,7 @@ package de.tfriem.tsukuru.games.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -82,7 +82,7 @@ public class GamesDaosTest {
 
     final String name = "TestGame";
     final String summary = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-    final long steamId = 1234;
+    final String steamId = "1234";
     final String steamUrl = "https://www.example.com";
     final long igdbId = 4567;
     final String igdbUrl = "https://www.example2.com";
@@ -103,8 +103,8 @@ public class GamesDaosTest {
     final Category complete = new Category(9, 10, 11, 12);
     final HltbPlaytime playtime = new HltbPlaytime(main, extra, complete);
 
-    final Release release1 = new Release(LocalDateTime.now(), platform1, Region.EUROPE);
-    final Release release2 = new Release(LocalDateTime.now(), platform2, Region.NORTH_AMERICA);
+    final Release release1 = new Release(Instant.now(), platform1, Region.EUROPE);
+    final Release release2 = new Release(Instant.now(), platform2, Region.NORTH_AMERICA);
     final Set<Release> releases = Set.of(release1, release2);
 
     // Execute

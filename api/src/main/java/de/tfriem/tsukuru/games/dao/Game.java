@@ -20,12 +20,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "game", schema = "games")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Game {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_generator")
@@ -41,7 +43,7 @@ public class Game {
   private String summary;
 
   @Column(name = "steam_id")
-  private long steamId;
+  private String steamId;
 
   @Column(name = "steam_url")
   private String steamUrl;

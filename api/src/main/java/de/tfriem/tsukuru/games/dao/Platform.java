@@ -15,12 +15,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "platform", schema = "games")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Platform {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "platform_generator")
